@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cinema_API", "..\Cinema_API\Cinema_API\Cinema_API.csproj", "{8184D226-8FDD-410C-8D35-EFD93868B832}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "..\Cinema_API\DataAccess\DataAccess.csproj", "{032C2ED6-CF66-489F-B4E1-028E7A15B1D5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8184D226-8FDD-410C-8D35-EFD93868B832}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8184D226-8FDD-410C-8D35-EFD93868B832}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8184D226-8FDD-410C-8D35-EFD93868B832}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8184D226-8FDD-410C-8D35-EFD93868B832}.Release|Any CPU.Build.0 = Release|Any CPU
+		{032C2ED6-CF66-489F-B4E1-028E7A15B1D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{032C2ED6-CF66-489F-B4E1-028E7A15B1D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{032C2ED6-CF66-489F-B4E1-028E7A15B1D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{032C2ED6-CF66-489F-B4E1-028E7A15B1D5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B8E837E-BCDC-487D-B380-FD13CE08011A}
+	EndGlobalSection
+EndGlobal
