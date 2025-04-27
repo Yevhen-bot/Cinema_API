@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Cinema_API.DTOs;
-using Cinema_API.Models;
 using DataAccess.Entity;
 
 namespace Cinema_API.Profiles
@@ -10,33 +9,34 @@ namespace Cinema_API.Profiles
         public AllProfiles() {
             CreateMap<Film, GetFilmModel>();
             CreateMap<CreateFilmModel, Film>();
+            CreateMap<UpdateFilmModel, Film>();
 
-            CreateMap<Session, SessionModel>();
-            CreateMap<SessionModel, Session>();
+            CreateMap<Hall, GetUpdateHallModel>().ReverseMap();
+            CreateMap<CreateHallModel, Hall>();
 
-            CreateMap<Hall, HallModel>();
-            CreateMap<HallModel, Hall>();
+            CreateMap<Session, GetUpdateSessionModel>().ReverseMap();
+            CreateMap<CreateSessionModel, Session>();
 
-            CreateMap<Ticket, TicketModel>();
-            CreateMap<TicketModel, Ticket>();
+            CreateMap<Ticket, GetUpdateHallModel>().ReverseMap();
+            CreateMap<CreateTicketModel, Ticket>();
 
-            CreateMap<StatusSession, StatusSessionModel>();
-            CreateMap<StatusSessionModel, StatusSession>();
+            CreateMap<StatusSession, GetStatusSessionModel>();
+            CreateMap<CreateStatusSessionModel, StatusSession>();
 
-            CreateMap<StatusTicket, StatusTicketModel>();
-            CreateMap<StatusTicketModel, StatusTicket>();
+            CreateMap<StatusTicket, GetStatusTicketModel>();
+            CreateMap<CreateStatusTicketModel, StatusTicket>();
 
-            CreateMap<User, UserModel>();
-            CreateMap<UserModel, User>();
+            CreateMap<User, GetUpdateUserModel>().ReverseMap();
+            CreateMap<CreateUserModel, User>();
 
-            CreateMap<Sale, SaleModel>();
-            CreateMap<SaleModel, Sale>();
+            CreateMap<Sale, GetUpdateSaleModel>().ReverseMap();
+            CreateMap<CreateSaleModel, Sale>();
 
-            CreateMap<Discount, DiscountModel>();
-            CreateMap<DiscountModel, Discount>();
+            CreateMap<CreateDiscountModel, Discount>();
+            CreateMap<Discount, GetDiscountModel>();
 
-            CreateMap<RegularDiscount, RegularDiscountModel>();
-            CreateMap<RegularDiscountModel, RegularDiscount>();
+            CreateMap<CreateRegularDiscountModel, RegularDiscount>();
+            CreateMap<RegularDiscount, GetRegularDiscountModel>();
         }
     }
 }

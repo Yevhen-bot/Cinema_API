@@ -1,8 +1,8 @@
 ﻿using DataAccess.Entity;
 
-namespace Cinema_API.Models
+namespace Cinema_API.DTOs
 {
-    public class StatusTicketModel
+    public class CreateStatusTicketModel
     {
         public string Status { get; set; }
     }

@@ -25,6 +25,4 @@ namespace DataAccess.Configs
                 .HasDefaultValue(DateTime.Now);
         }
     }
-    {
-    }
 }

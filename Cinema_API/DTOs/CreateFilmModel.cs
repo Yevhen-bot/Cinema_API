@@ -1,6 +1,6 @@
 ﻿using DataAccess.Entity;
 
-namespace Cinema_API.Models
+namespace Cinema_API.DTOs
 {
     public class CreateFilmModel
     {

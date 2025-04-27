@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using DataAccess.Entity;
 
-namespace Cinema_API.Models
+namespace Cinema_API.DTOs
 {
-    public class UserModel
+    public class GetUpdateUserModel
     {
+        public int Id { get; set; }
         [MinLength(3)]
         public string Name { get; set; }
         [EmailAddress]

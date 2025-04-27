@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Cinema_API.Models
+namespace Cinema_API.DTOs
 {
-    public class HallModel
+    public class CreateHallModel
     {
         [Range(1, 300)]
         public int Seats { get; set; }

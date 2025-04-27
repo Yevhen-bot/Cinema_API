@@ -1,6 +1,6 @@
 ﻿namespace Cinema_API.DTOs
 {
-    public class GetFilmModel
+    public class UpdateFilmModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -10,7 +10,5 @@
         public DateTime ReleaseDate { get; set; }
         public int? Restriction { get; set; }
         public string? Description { get; set; }
-        public int? DiscountId { get; set; }
-        public int? RegularDiscountId { get; set; }
     }
 }

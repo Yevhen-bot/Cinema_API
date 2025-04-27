@@ -1,8 +1,8 @@
 ﻿using DataAccess.Entity;
 
-namespace Cinema_API.Models
+namespace Cinema_API.DTOs
 {
-    public class SessionModel
+    public class CreateSessionModel
     {
         public int FilmId { get; set; }
         public int HallId { get; set; }

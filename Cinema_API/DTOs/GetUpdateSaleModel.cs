@@ -1,9 +1,8 @@
-﻿using DataAccess.Entity;
-
-namespace Cinema_API.DTOs
+﻿namespace Cinema_API.DTOs
 {
-    public class SaleModel
+    public class GetUpdateSaleModel
     {
+        public int Id { get; set; }
         public int UserId { get; set; }
         public int TicketsCount { get; set; }
         public int TotalPrice { get; set; }

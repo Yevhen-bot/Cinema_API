@@ -17,6 +17,7 @@ var connectionString = configuration.GetConnectionString("Main");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 

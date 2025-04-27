@@ -1,8 +1,8 @@
 ﻿using DataAccess.Entity;
 
-namespace Cinema_API.Models
+namespace Cinema_API.DTOs
 {
-    public class DiscountModel
+    public class CreateDiscountModel
     {
         public int FilmId { get; set; }
         public int DiscountPercent { get; set; }

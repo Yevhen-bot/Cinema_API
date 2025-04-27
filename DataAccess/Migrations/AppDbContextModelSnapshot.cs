@@ -22,7 +22,7 @@ namespace DataAccess.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("EF_project.Entitty.Discount", b =>
+            modelBuilder.Entity("DataAccess.Entity.Discount", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +44,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Discounts");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.Film", b =>
+            modelBuilder.Entity("DataAccess.Entity.Film", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,7 +87,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Films");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.Hall", b =>
+            modelBuilder.Entity("DataAccess.Entity.Hall", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -108,7 +108,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Halls");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.RegularDiscount", b =>
+            modelBuilder.Entity("DataAccess.Entity.RegularDiscount", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -130,7 +130,7 @@ namespace DataAccess.Migrations
                     b.ToTable("RegularDiscounts");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.Sale", b =>
+            modelBuilder.Entity("DataAccess.Entity.Sale", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -141,7 +141,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("SaleDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2025, 4, 16, 23, 10, 42, 506, DateTimeKind.Local).AddTicks(4447));
+                        .HasDefaultValue(new DateTime(2025, 4, 26, 21, 28, 7, 6, DateTimeKind.Local).AddTicks(5145));
 
                     b.Property<int>("TicketsCount")
                         .HasColumnType("int");
@@ -159,7 +159,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Sales");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.Session", b =>
+            modelBuilder.Entity("DataAccess.Entity.Session", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -193,7 +193,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Sessions");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.StatusSession", b =>
+            modelBuilder.Entity("DataAccess.Entity.StatusSession", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -210,7 +210,7 @@ namespace DataAccess.Migrations
                     b.ToTable("StatusSessions");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.StatusTicket", b =>
+            modelBuilder.Entity("DataAccess.Entity.StatusTicket", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -227,7 +227,7 @@ namespace DataAccess.Migrations
                     b.ToTable("StatusTickets");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.Ticket", b =>
+            modelBuilder.Entity("DataAccess.Entity.Ticket", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -256,7 +256,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Tickets");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.User", b =>
+            modelBuilder.Entity("DataAccess.Entity.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -287,31 +287,31 @@ namespace DataAccess.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.Discount", b =>
+            modelBuilder.Entity("DataAccess.Entity.Discount", b =>
                 {
-                    b.HasOne("EF_project.Entitty.Film", "Film")
+                    b.HasOne("DataAccess.Entity.Film", "Film")
                         .WithOne("Discount")
-                        .HasForeignKey("EF_project.Entitty.Discount", "FilmId")
+                        .HasForeignKey("DataAccess.Entity.Discount", "FilmId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Film");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.RegularDiscount", b =>
+            modelBuilder.Entity("DataAccess.Entity.RegularDiscount", b =>
                 {
-                    b.HasOne("EF_project.Entitty.Film", "Film")
+                    b.HasOne("DataAccess.Entity.Film", "Film")
                         .WithOne("RegularDiscount")
-                        .HasForeignKey("EF_project.Entitty.RegularDiscount", "FilmId")
+                        .HasForeignKey("DataAccess.Entity.RegularDiscount", "FilmId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Film");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.Sale", b =>
+            modelBuilder.Entity("DataAccess.Entity.Sale", b =>
                 {
-                    b.HasOne("EF_project.Entitty.User", "User")
+                    b.HasOne("DataAccess.Entity.User", "User")
                         .WithMany("Sales")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -320,21 +320,21 @@ namespace DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.Session", b =>
+            modelBuilder.Entity("DataAccess.Entity.Session", b =>
                 {
-                    b.HasOne("EF_project.Entitty.Film", "Film")
+                    b.HasOne("DataAccess.Entity.Film", "Film")
                         .WithMany("Sessions")
                         .HasForeignKey("FilmId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("EF_project.Entitty.Hall", "Hall")
+                    b.HasOne("DataAccess.Entity.Hall", "Hall")
                         .WithMany("Sessions")
                         .HasForeignKey("HallId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("EF_project.Entitty.StatusSession", "Status")
+                    b.HasOne("DataAccess.Entity.StatusSession", "Status")
                         .WithMany("Sessions")
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -347,25 +347,25 @@ namespace DataAccess.Migrations
                     b.Navigation("Status");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.Ticket", b =>
+            modelBuilder.Entity("DataAccess.Entity.Ticket", b =>
                 {
-                    b.HasOne("EF_project.Entitty.Session", "Session")
+                    b.HasOne("DataAccess.Entity.Session", "Session")
                         .WithMany("Tickets")
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EF_project.Entitty.StatusTicket", "Status")
+                    b.HasOne("DataAccess.Entity.StatusTicket", "Status")
                         .WithMany("Tickets")
                         .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Session");
 
                     b.Navigation("Status");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.Film", b =>
+            modelBuilder.Entity("DataAccess.Entity.Film", b =>
                 {
                     b.Navigation("Discount");
 
@@ -374,27 +374,27 @@ namespace DataAccess.Migrations
                     b.Navigation("Sessions");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.Hall", b =>
+            modelBuilder.Entity("DataAccess.Entity.Hall", b =>
                 {
                     b.Navigation("Sessions");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.Session", b =>
+            modelBuilder.Entity("DataAccess.Entity.Session", b =>
                 {
                     b.Navigation("Tickets");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.StatusSession", b =>
+            modelBuilder.Entity("DataAccess.Entity.StatusSession", b =>
                 {
                     b.Navigation("Sessions");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.StatusTicket", b =>
+            modelBuilder.Entity("DataAccess.Entity.StatusTicket", b =>
                 {
                     b.Navigation("Tickets");
                 });
 
-            modelBuilder.Entity("EF_project.Entitty.User", b =>
+            modelBuilder.Entity("DataAccess.Entity.User", b =>
                 {
                     b.Navigation("Sales");
                 });
