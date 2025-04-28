@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Cinema_API.DTOs;
+using Cinema_API.Services;
 using DataAccess.Data;
 using DataAccess.Entity;
 using Microsoft.AspNetCore.Http;
@@ -13,11 +14,13 @@ namespace Cinema_API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly AppDbContext _context;
+        private readonly SessionService _sessionService;
 
-        public SessionController(IMapper mapper, AppDbContext context)
+        public SessionController(IMapper mapper, AppDbContext context, SessionService sessionService)
         {
             _mapper = mapper;
             _context = context;
+            _sessionService = sessionService;
         }
 
         [HttpGet]
@@ -44,7 +47,9 @@ namespace Cinema_API.Controllers
             {
                 return BadRequest();
             }
-            _context.Sessions.Add(_mapper.Map<Session>(session));
+            var s = _mapper.Map<Session>(session);
+            _context.Sessions.Add(s);
+            _sessionService.SessionCreated(s);
             _context.SaveChanges();
             return Created();
         }

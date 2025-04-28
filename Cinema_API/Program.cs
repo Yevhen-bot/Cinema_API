@@ -1,4 +1,5 @@
 using System;
+using Cinema_API.Services;
 using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,7 @@ var connectionString = configuration.GetConnectionString("Main");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddScoped<SessionService>();
 
 var app = builder.Build();
 

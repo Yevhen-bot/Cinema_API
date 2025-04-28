@@ -18,12 +18,18 @@ namespace DataAccess.Configs
                 .HasOne(s => s.Film)
                 .WithMany(f => f.Sessions)
                 .HasForeignKey(s => s.FilmId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasOne(s => s.Hall)
                 .WithMany(h => h.Sessions)
                 .HasForeignKey(s => s.HallId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .HasOne(s => s.Status)
+                .WithMany(h => h.Sessions)
+                .HasForeignKey(s => s.StatusId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

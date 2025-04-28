@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Cinema_API.DTOs;
+using Cinema_API.Services;
 using DataAccess.Data;
 using DataAccess.Entity;
 using Microsoft.AspNetCore.Http;
@@ -13,11 +14,13 @@ namespace Cinema_API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly AppDbContext _context;
+        private readonly SessionService _sessionService;
 
-        public HallController(IMapper mapper, AppDbContext context)
+        public HallController(IMapper mapper, AppDbContext context, SessionService sessionService)
         {
             _mapper = mapper;
             _context = context;
+            _sessionService = sessionService;
         }
 
         [HttpGet]
@@ -61,7 +64,7 @@ namespace Cinema_API.Controllers
             {
                 return NotFound();
             }
-
+            _sessionService.HallUpdated(existingHall.Id, hall.Seats - existingHall.Seats);
             existingHall.Seats = hall.Seats;
             existingHall.IsVip = hall.IsVip;
 
@@ -77,6 +80,7 @@ namespace Cinema_API.Controllers
             {
                 return NotFound();
             }
+            _sessionService.HallRemoved(id);
             _context.Halls.Remove(hall);
             _context.SaveChanges();
             return NoContent();
