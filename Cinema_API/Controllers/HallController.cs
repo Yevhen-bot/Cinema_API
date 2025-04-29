@@ -64,7 +64,7 @@ namespace Cinema_API.Controllers
             {
                 return NotFound();
             }
-            _sessionService.HallUpdated(existingHall.Id, hall.Seats - existingHall.Seats);
+            _sessionService.HallUpdated(existingHall.Id, hall.Seats);
             existingHall.Seats = hall.Seats;
             existingHall.IsVip = hall.IsVip;
 
@@ -80,7 +80,6 @@ namespace Cinema_API.Controllers
             {
                 return NotFound();
             }
-            _sessionService.HallRemoved(id);
             _context.Halls.Remove(hall);
             _context.SaveChanges();
             return NoContent();

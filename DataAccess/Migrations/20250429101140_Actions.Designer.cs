@@ -4,6 +4,7 @@ using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250429101140_Actions")]
+    partial class Actions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,7 +144,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("SaleDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2025, 4, 29, 14, 7, 53, 651, DateTimeKind.Local).AddTicks(479));
+                        .HasDefaultValue(new DateTime(2025, 4, 29, 13, 11, 40, 268, DateTimeKind.Local).AddTicks(2504));
 
                     b.Property<int>("TicketsCount")
                         .HasColumnType("int");
@@ -325,13 +328,13 @@ namespace DataAccess.Migrations
                     b.HasOne("DataAccess.Entity.Film", "Film")
                         .WithMany("Sessions")
                         .HasForeignKey("FilmId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("DataAccess.Entity.Hall", "Hall")
                         .WithMany("Sessions")
                         .HasForeignKey("HallId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("DataAccess.Entity.StatusSession", "Status")

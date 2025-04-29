@@ -49,8 +49,8 @@ namespace Cinema_API.Controllers
             }
             var s = _mapper.Map<Session>(session);
             _context.Sessions.Add(s);
-            _sessionService.SessionCreated(s);
             _context.SaveChanges();
+            _sessionService.SessionCreated(s);
             return Created();
         }
 
