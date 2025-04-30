@@ -4,6 +4,7 @@ using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250430214912_ch6")]
+    partial class ch6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,7 +163,7 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("SaleDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2025, 5, 1, 0, 51, 9, 789, DateTimeKind.Local).AddTicks(9581));
+                        .HasDefaultValue(new DateTime(2025, 5, 1, 0, 49, 12, 85, DateTimeKind.Local).AddTicks(7366));
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -388,8 +391,7 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("DataAccess.Entity.Cart", "Cart")
                         .WithMany("Tickets")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("CartId");
 
                     b.HasOne("DataAccess.Entity.Sale", "Sale")
                         .WithMany("Tickets")

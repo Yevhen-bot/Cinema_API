@@ -3,6 +3,7 @@ using Cinema_API.DTOs;
 using Cinema_API.Services;
 using DataAccess.Data;
 using DataAccess.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +39,7 @@ namespace Cinema_API.Controllers
             return Ok(_mapper.Map<GetFilmModel>(film));
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult CreateFilm([FromBody] CreateFilmModel film)
         {
@@ -50,6 +52,7 @@ namespace Cinema_API.Controllers
             return Created();
         }
 
+        [Authorize]
         [HttpPut]
         public IActionResult UpdateFilm([FromBody] UpdateFilmModel film)
         {
@@ -75,6 +78,7 @@ namespace Cinema_API.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult DeleteFilm(int id)
         {

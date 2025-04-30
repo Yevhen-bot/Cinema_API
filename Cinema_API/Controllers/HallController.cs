@@ -3,6 +3,7 @@ using Cinema_API.DTOs;
 using Cinema_API.Services;
 using DataAccess.Data;
 using DataAccess.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,6 +41,7 @@ namespace Cinema_API.Controllers
             return Ok(_mapper.Map<GetUpdateHallModel>(hall));
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult CreateHall([FromBody] CreateHallModel hall)
         {
@@ -52,6 +54,7 @@ namespace Cinema_API.Controllers
             return Created();
         }
 
+        [Authorize]
         [HttpPut]
         public IActionResult UpdateHall([FromBody] GetUpdateHallModel hall)
         {
@@ -72,6 +75,7 @@ namespace Cinema_API.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult DeleteHall(int id)
         {

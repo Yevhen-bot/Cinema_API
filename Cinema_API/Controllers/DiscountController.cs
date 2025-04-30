@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Cinema_API.DTOs;
 using DataAccess.Entity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cinema_API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DiscountController : ControllerBase
@@ -37,7 +39,7 @@ namespace Cinema_API.Controllers
             return Ok(_mapper.Map<GetDiscountModel>(discount));
         }
 
-        [HttpPost]
+        [HttpPost] 
         public IActionResult CreateDiscount([FromBody] CreateDiscountModel discount)
         {
             if (discount == null)

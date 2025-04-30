@@ -1,5 +1,6 @@
 ﻿using DataAccess.Data;
 using DataAccess.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cinema_API.Services
 {
@@ -12,7 +13,7 @@ namespace Cinema_API.Services
             _context = context;
         }
 
-        public void UserCreated(int userId)
+        public int UserCreated(int userId)
         {
             var cart = new Cart
             {
@@ -20,6 +21,7 @@ namespace Cinema_API.Services
             };
             _context.Carts.Add(cart);
             _context.SaveChanges();
+            return cart.Id;
         }
 
         public void TicketBooked(int ticketId, int userId)
@@ -31,7 +33,7 @@ namespace Cinema_API.Services
             }
 
             ticket.StatusId = 2;
-            _context.Users.Find(userId).Cart.Tickets.Add(ticket);
+            ticket.CartId = _context.Carts.FirstOrDefault(c => c.UserId == userId).Id;
             _context.SaveChanges();
         }
 
@@ -43,13 +45,13 @@ namespace Cinema_API.Services
                 throw new Exception("Ticket not found");
             }
             ticket.StatusId = null;
-            _context.Users.Find(userId).Cart.Tickets.Remove(ticket);
+            ticket.CartId = null;
             _context.SaveChanges();
         }
 
         public void CartBought(int userId)
         {
-            var user = _context.Users.Find(userId);
+            var user = _context.Users.Include(u => u.Cart).ThenInclude(c => c.Tickets).FirstOrDefault(u => u.Id == userId);
             if (user == null)
             {
                 throw new Exception("User not found");
@@ -60,22 +62,23 @@ namespace Cinema_API.Services
                 UserId = userId,
                 SaleDate = DateTime.Now,
             };
+            _context.Sales.Add(sale);
+            _context.SaveChanges();
 
             foreach (var ticket in user.Cart.Tickets)
             {
                 ticket.StatusId = 1;
+                ticket.SaleId = sale.Id;
                 _context.Tickets.Update(ticket);
-                sale.Tickets.Add(ticket);
             }
 
-            _context.Sales.Add(sale);
-            Clear(user.CartId);
             _context.SaveChanges();
+            Clear(user.Cart.Id);
         }
 
         public void AbortUserSession(int userId)
         {
-            var user = _context.Users.Find(userId);
+            var user = _context.Users.Include(u => u.Cart).ThenInclude(c => c.Tickets).FirstOrDefault(u => u.Id == userId);
             if (user == null)
             {
                 throw new Exception("User not found");
@@ -84,16 +87,17 @@ namespace Cinema_API.Services
             foreach (var ticket in user.Cart.Tickets)
             {
                 ticket.StatusId = null;
+                ticket.CartId = null;
                 _context.Tickets.Update(ticket);
             }
 
-            Clear(user.CartId);
             _context.SaveChanges();
+            Clear(user.CartId);
         }
 
         private void Clear(int cartId)
         {
-            _context.Carts.Find(cartId).Tickets.Clear();
+            _context.Carts.Find(cartId)!.Tickets.Clear();
             _context.SaveChanges();
         }
     }

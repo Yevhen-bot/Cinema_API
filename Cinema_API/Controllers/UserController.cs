@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Cinema_API.DTOs;
+using Cinema_API.Jwt;
 using Cinema_API.Services;
 using DataAccess.Data;
 using DataAccess.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,20 +17,24 @@ namespace Cinema_API.Controllers
         private readonly IMapper _mapper;
         private readonly AppDbContext _context;
         private readonly CartService _cartservice;
+        private readonly JwtProvider _jwtProvider;
 
-        public UserController(IMapper mapper, AppDbContext context, CartService cartService)
+        public UserController(IMapper mapper, AppDbContext context, CartService cartService, JwtProvider jwtProvider)
         {
             _mapper = mapper;
             _context = context;
             _cartservice = cartService;
+            _jwtProvider = jwtProvider;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetUsers()
         {
             return Ok(_context.Users.ToList().Select(u => _mapper.Map<GetUpdateUserModel>(u)));
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetUser(int id)
         {
@@ -40,8 +46,8 @@ namespace Cinema_API.Controllers
             return Ok(_mapper.Map<GetUpdateUserModel>(user));
         }
 
-        [HttpPost]
-        public IActionResult CreateUser([FromBody] CreateUserModel user)
+        [HttpPost("register")]
+        public IActionResult Sign([FromBody] CreateUserModel user)
         {
             if (user == null)
             {
@@ -50,11 +56,29 @@ namespace Cinema_API.Controllers
             var u = _mapper.Map<User>(user);
             _context.Users.Add(u);
             _context.SaveChanges();
-            _cartservice.UserCreated(u.Id);
+            u.CartId = _cartservice.UserCreated(u.Id);
+            _context.Users.Update(u);
+            _context.SaveChanges();
 
             return Created();
         }
 
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginUser user)
+        {
+            var us = _context.Users.FirstOrDefault(u => u.Email == user.Email);
+            if (us == null)
+            {
+                return NotFound();
+            }
+            var token = _jwtProvider.GenerateToken(us);
+
+            HttpContext.Response.Cookies.Append("name", token);
+
+            return Ok();
+        }
+
+        [Authorize]
         [HttpPut]
         public IActionResult UpdateUser([FromBody] GetUpdateUserModel user)
         {
@@ -77,6 +101,7 @@ namespace Cinema_API.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult DeleteUser(int id)
         {

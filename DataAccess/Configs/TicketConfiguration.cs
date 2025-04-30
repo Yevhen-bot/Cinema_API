@@ -31,6 +31,12 @@ namespace DataAccess.Configs
                 .WithMany(s => s.Tickets)
                 .HasForeignKey(t => t.SaleId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasOne(t => t.Cart)
+                .WithMany(c => c.Tickets)
+                .HasForeignKey(t => t.CartId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

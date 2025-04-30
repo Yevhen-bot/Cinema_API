@@ -3,6 +3,7 @@ using Cinema_API.DTOs;
 using Cinema_API.Services;
 using DataAccess.Data;
 using DataAccess.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,6 +41,7 @@ namespace Cinema_API.Controllers
             return Ok(_mapper.Map<GetUpdateSessionModel>(session));
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult CreateSession([FromBody] CreateSessionModel session)
         {
@@ -55,6 +57,7 @@ namespace Cinema_API.Controllers
             return Created();
         }
 
+        [Authorize]
         [HttpPut]
         public IActionResult UpdateSession([FromBody] GetUpdateSessionModel session)
         {
@@ -78,6 +81,7 @@ namespace Cinema_API.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult DeleteSession(int id)
         {

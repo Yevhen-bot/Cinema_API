@@ -3,11 +3,13 @@ using Cinema_API.DTOs;
 using Cinema_API.Services;
 using DataAccess.Data;
 using DataAccess.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cinema_API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SaleController : ControllerBase
@@ -53,11 +55,12 @@ namespace Cinema_API.Controllers
         }
 
         [HttpPost("order")]
-        public IActionResult CreateOrder(int id) // same - waiting for Auth
+        public IActionResult CreateOrder()
         {
             try
             {
-                _cartservice.CartBought(id);
+                var userId = int.Parse(HttpContext.User.FindFirst("userId")?.Value);
+                _cartservice.CartBought(userId);
             }
             catch (Exception ex)
             {
@@ -98,11 +101,12 @@ namespace Cinema_API.Controllers
         }
 
         [HttpDelete("clearCart")]
-        public IActionResult ClearCart(int id) // same - waiting for Auth
+        public IActionResult ClearCart()
         {
             try
             {
-                _cartservice.AbortUserSession(id);
+                var userId = int.Parse(HttpContext.User.FindFirst("userId")?.Value);
+                _cartservice.AbortUserSession(userId);
             }
             catch (Exception ex)
             {

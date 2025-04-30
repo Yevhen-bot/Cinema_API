@@ -17,7 +17,7 @@ namespace Cinema_API.Profiles
             CreateMap<Session, GetUpdateSessionModel>().ReverseMap();
             CreateMap<CreateSessionModel, Session>();
 
-            CreateMap<Ticket, GetUpdateHallModel>().ReverseMap();
+            CreateMap<Ticket, GetUpdateTicketModel>().ReverseMap();
             CreateMap<CreateTicketModel, Ticket>();
 
             CreateMap<StatusSession, GetStatusSessionModel>();

@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
 using Cinema_API.DTOs;
+using Cinema_API.Jwt;
 using Cinema_API.Services;
 using DataAccess.Data;
 using DataAccess.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cinema_API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TicketController : ControllerBase
@@ -95,7 +98,8 @@ namespace Cinema_API.Controllers
         {
             try
             {
-                _cartservice.TicketBooked(id, 1); // Assuming userId is 1 for demo purposes - authentication should be implemented
+                var userId = int.Parse(HttpContext.User.FindFirst("userId")?.Value);
+                _cartservice.TicketBooked(id, userId);
             }
             catch (Exception e)
             {
@@ -115,7 +119,8 @@ namespace Cinema_API.Controllers
         {
             try
             {
-                _cartservice.TicketUnbooked(id, 1); // Assuming userId is 1 for demo purposes - authentication should be implemented
+                var userId = int.Parse(HttpContext.User.FindFirst("userId")?.Value);
+                _cartservice.TicketUnbooked(id, userId);
             }
             catch (Exception e)
             {
