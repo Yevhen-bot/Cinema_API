@@ -52,6 +52,21 @@ namespace Cinema_API.Controllers
             return Created();
         }
 
+        [HttpPost("order")]
+        public IActionResult CreateOrder(int id) // same - waiting for Auth
+        {
+            try
+            {
+                _cartservice.CartBought(id);
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+
+            return Created();
+        }
+
         [HttpPut]
         public IActionResult UpdateSale([FromBody] GetUpdateSaleModel sale)
         {
@@ -70,7 +85,7 @@ namespace Cinema_API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteSale(int id)
+        public IActionResult DeleteSale(int id) 
         {
             var sale = _context.Sales.Find(id);
             if (sale == null)
@@ -79,6 +94,21 @@ namespace Cinema_API.Controllers
             }
             _context.Sales.Remove(sale);
             _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpDelete("clearCart")]
+        public IActionResult ClearCart(int id) // same - waiting for Auth
+        {
+            try
+            {
+                _cartservice.AbortUserSession(id);
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+
             return NoContent();
         }
     }

@@ -15,12 +15,14 @@ namespace Cinema_API.Controllers
         private readonly IMapper _mapper;
         private readonly AppDbContext _context;
         private readonly CartService _cartservice;
+        private readonly TicketService _ticketService;
 
-        public TicketController(IMapper mapper, AppDbContext context, CartService cartService)
+        public TicketController(IMapper mapper, AppDbContext context, CartService cartService, TicketService ticketService)
         {
             _mapper = mapper;
             _context = context;
             _cartservice = cartService;
+            _ticketService = ticketService;
         }
 
         [HttpGet]
@@ -65,6 +67,65 @@ namespace Cinema_API.Controllers
                 return NotFound();
             }
             _mapper.Map(ticket, existingTicket);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpPut("return/{id}")]
+        public IActionResult ReturnTicket(int id)
+        {
+            try
+            {
+                _ticketService.ReturnTicket(id);
+            }
+            catch (Exception e)
+            {
+                if(e.Message == "404")
+                {
+                    return NotFound();
+                } else return BadRequest();
+            }
+
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpPut("addToCart/{id}")]
+        public IActionResult AddTicketToCart(int id)
+        {
+            try
+            {
+                _cartservice.TicketBooked(id, 1); // Assuming userId is 1 for demo purposes - authentication should be implemented
+            }
+            catch (Exception e)
+            {
+                if (e.Message == "404")
+                {
+                    return NotFound();
+                }
+                else return BadRequest();
+            }
+
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpPut("removeFromCart/{id}")]
+        public IActionResult RemoveTicketFromCart(int id)
+        {
+            try
+            {
+                _cartservice.TicketUnbooked(id, 1); // Assuming userId is 1 for demo purposes - authentication should be implemented
+            }
+            catch (Exception e)
+            {
+                if (e.Message == "404")
+                {
+                    return NotFound();
+                }
+                else return BadRequest();
+            }
+
             _context.SaveChanges();
             return NoContent();
         }

@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cinema_API.Services
 {
-    public  class SessionService
+    public  class TicketService
     {
         private readonly AppDbContext _context;
 
-        public SessionService(AppDbContext context)
+        public TicketService(AppDbContext context)
         {
             _context = context;
         }
@@ -54,6 +54,23 @@ namespace Cinema_API.Services
 
             }
 
+            _context.SaveChanges();
+        }
+
+        public void ReturnTicket(int ticketId)
+        {
+            var ticket = _context.Tickets.Find(ticketId);
+            if (ticket == null)
+            {
+                throw new Exception("404");
+            }
+
+            if(ticket.Session.StatusId != 3)
+            {
+                throw new Exception("400");
+            }
+
+            ticket.StatusId = 3;
             _context.SaveChanges();
         }
     }

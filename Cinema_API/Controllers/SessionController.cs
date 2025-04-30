@@ -14,9 +14,9 @@ namespace Cinema_API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly AppDbContext _context;
-        private readonly SessionService _sessionService;
+        private readonly TicketService _sessionService;
 
-        public SessionController(IMapper mapper, AppDbContext context, SessionService sessionService)
+        public SessionController(IMapper mapper, AppDbContext context, TicketService sessionService)
         {
             _mapper = mapper;
             _context = context;
@@ -51,6 +51,7 @@ namespace Cinema_API.Controllers
             _context.Sessions.Add(s);
             _context.SaveChanges();
             _sessionService.SessionCreated(s);
+
             return Created();
         }
 

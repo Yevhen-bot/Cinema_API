@@ -19,7 +19,7 @@ var connectionString = configuration.GetConnectionString("Main");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddScoped<SessionService>();
+builder.Services.AddScoped<TicketService>();
 builder.Services.AddScoped<CartService>();
 
 var app = builder.Build();
