@@ -13,6 +13,8 @@ namespace DataAccess.Entity
         public string Email { get; set; }
         public bool IsAdmin { get; set; }
         public int Bonuses { get; set; }
+        public int CartId { get; set; }
+        public Cart Cart { get; set; }
         public ICollection<Sale> Sales { get; set; }
     }
 }

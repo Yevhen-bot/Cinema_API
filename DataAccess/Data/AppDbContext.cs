@@ -22,6 +22,7 @@ namespace DataAccess.Data
         public DbSet<Sale> Sales{ get; set; }
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<RegularDiscount> RegularDiscounts { get; set; }
+        public DbSet<Cart> Carts { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {}
 

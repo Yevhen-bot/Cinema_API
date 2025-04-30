@@ -4,6 +4,7 @@ using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250430164353_tickets-sales")]
+    partial class ticketssales
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,25 +24,6 @@ namespace DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
-
-            modelBuilder.Entity("DataAccess.Entity.Cart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Carts");
-                });
 
             modelBuilder.Entity("DataAccess.Entity.Discount", b =>
                 {
@@ -160,7 +144,10 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("SaleDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2025, 4, 30, 20, 22, 4, 659, DateTimeKind.Local).AddTicks(8095));
+                        .HasDefaultValue(new DateTime(2025, 4, 30, 19, 43, 52, 959, DateTimeKind.Local).AddTicks(9497));
+
+                    b.Property<int>("TotalPrice")
+                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -248,9 +235,6 @@ namespace DataAccess.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("Price")
                         .HasColumnType("int");
 
@@ -267,8 +251,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CartId");
 
                     b.HasIndex("SaleId");
 
@@ -292,9 +274,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -311,17 +290,6 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("DataAccess.Entity.Cart", b =>
-                {
-                    b.HasOne("DataAccess.Entity.User", "User")
-                        .WithOne("Cart")
-                        .HasForeignKey("DataAccess.Entity.Cart", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DataAccess.Entity.Discount", b =>
@@ -386,10 +354,6 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Entity.Ticket", b =>
                 {
-                    b.HasOne("DataAccess.Entity.Cart", null)
-                        .WithMany("Tickets")
-                        .HasForeignKey("CartId");
-
                     b.HasOne("DataAccess.Entity.Sale", "Sale")
                         .WithMany("Tickets")
                         .HasForeignKey("SaleId")
@@ -411,11 +375,6 @@ namespace DataAccess.Migrations
                     b.Navigation("Session");
 
                     b.Navigation("Status");
-                });
-
-            modelBuilder.Entity("DataAccess.Entity.Cart", b =>
-                {
-                    b.Navigation("Tickets");
                 });
 
             modelBuilder.Entity("DataAccess.Entity.Film", b =>
@@ -454,9 +413,6 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Entity.User", b =>
                 {
-                    b.Navigation("Cart")
-                        .IsRequired();
-
                     b.Navigation("Sales");
                 });
 #pragma warning restore 612, 618

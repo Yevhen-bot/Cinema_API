@@ -15,5 +15,7 @@ namespace DataAccess.Entity
         public int? Price { get; set; }
         public StatusTicket? Status { get; set; }
         public int? StatusId { get; set; } 
+        public int? SaleId { get; set; } 
+        public Sale? Sale { get; set; }
     }
 }

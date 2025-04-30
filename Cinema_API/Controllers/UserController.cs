@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Cinema_API.DTOs;
+using Cinema_API.Services;
 using DataAccess.Data;
 using DataAccess.Entity;
 using Microsoft.AspNetCore.Http;
@@ -13,11 +14,13 @@ namespace Cinema_API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly AppDbContext _context;
+        private readonly CartService _cartservice;
 
-        public UserController(IMapper mapper, AppDbContext context)
+        public UserController(IMapper mapper, AppDbContext context, CartService cartService)
         {
             _mapper = mapper;
             _context = context;
+            _cartservice = cartService;
         }
 
         [HttpGet]
@@ -44,8 +47,11 @@ namespace Cinema_API.Controllers
             {
                 return BadRequest();
             }
-            _context.Users.Add(_mapper.Map<User>(user));
+            var u = _mapper.Map<User>(user);
+            _context.Users.Add(u);
             _context.SaveChanges();
+            _cartservice.UserCreated(u.Id);
+
             return Created();
         }
 

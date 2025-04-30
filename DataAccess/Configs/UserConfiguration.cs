@@ -21,6 +21,12 @@ namespace DataAccess.Configs
             builder
                 .Property(u => u.IsAdmin)
                 .HasDefaultValue(false);
+
+            builder
+                .HasOne(u => u.Cart)
+                .WithOne(c => c.User)
+                .HasForeignKey<Cart>(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
