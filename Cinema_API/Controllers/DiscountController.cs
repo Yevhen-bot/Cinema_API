@@ -39,6 +39,7 @@ namespace Cinema_API.Controllers
             return Ok(_mapper.Map<GetDiscountModel>(discount));
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpPost] 
         public IActionResult CreateDiscount([FromBody] CreateDiscountModel discount)
         {
@@ -51,6 +52,7 @@ namespace Cinema_API.Controllers
             return Created();
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteDiscount(int id)
         {

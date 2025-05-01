@@ -41,7 +41,7 @@ namespace Cinema_API.Controllers
             return Ok(_mapper.Map<GetUpdateHallModel>(hall));
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         public IActionResult CreateHall([FromBody] CreateHallModel hall)
         {
@@ -54,7 +54,7 @@ namespace Cinema_API.Controllers
             return Created();
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpPut]
         public IActionResult UpdateHall([FromBody] GetUpdateHallModel hall)
         {
@@ -75,7 +75,7 @@ namespace Cinema_API.Controllers
             return Ok();
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteHall(int id)
         {

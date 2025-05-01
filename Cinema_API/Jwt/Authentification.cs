@@ -34,7 +34,10 @@ namespace Cinema_API.Jwt
                     };
                 });
 
-            services.AddAuthorization();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policy => policy.RequireClaim("Admin", "True"));
+            });
         }
     }
 }

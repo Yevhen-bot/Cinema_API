@@ -27,14 +27,14 @@ namespace Cinema_API.Controllers
             _jwtProvider = jwtProvider;
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpGet]
         public IActionResult GetUsers()
         {
             return Ok(_context.Users.ToList().Select(u => _mapper.Map<GetUpdateUserModel>(u)));
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpGet("{id}")]
         public IActionResult GetUser(int id)
         {
@@ -54,6 +54,7 @@ namespace Cinema_API.Controllers
                 return BadRequest();
             }
             var u = _mapper.Map<User>(user);
+            u.IsAdmin = false;
             _context.Users.Add(u);
             _context.SaveChanges();
             u.CartId = _cartservice.UserCreated(u.Id);
@@ -78,7 +79,26 @@ namespace Cinema_API.Controllers
             return Ok();
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
+        [HttpPost("addworker")]
+        public IActionResult AddWorker([FromBody] CreateAdminModel user)
+        {
+            if (user == null)
+            {
+                return BadRequest();
+            }
+            var u = _mapper.Map<User>(user);
+            u.IsAdmin = true;
+            _context.Users.Add(u);
+            _context.SaveChanges();
+            u.CartId = _cartservice.UserCreated(u.Id);
+            _context.Users.Update(u);
+            _context.SaveChanges();
+
+            return Created();
+        }
+
+        [Authorize(Policy = "Admin")]
         [HttpPut]
         public IActionResult UpdateUser([FromBody] GetUpdateUserModel user)
         {
@@ -102,6 +122,28 @@ namespace Cinema_API.Controllers
         }
 
         [Authorize]
+        [HttpPut("changeEmail")]
+        public IActionResult ChangeEmail([FromBody] ChangeEmailModel emails)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == int.Parse(HttpContext.User.FindFirst("userId").Value));
+            if(user == null)
+            {
+                return NotFound();
+            }
+
+            if(user.Email != emails.OldEmail)
+            {
+                return BadRequest();
+            }
+
+            user.Email = emails.NewEmail;
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
+
+        [Authorize(Policy = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteUser(int id)
         {

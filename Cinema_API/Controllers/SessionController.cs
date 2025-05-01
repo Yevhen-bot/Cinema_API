@@ -41,7 +41,7 @@ namespace Cinema_API.Controllers
             return Ok(_mapper.Map<GetUpdateSessionModel>(session));
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         public IActionResult CreateSession([FromBody] CreateSessionModel session)
         {
@@ -57,7 +57,7 @@ namespace Cinema_API.Controllers
             return Created();
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpPut]
         public IActionResult UpdateSession([FromBody] GetUpdateSessionModel session)
         {
@@ -81,7 +81,7 @@ namespace Cinema_API.Controllers
             return NoContent();
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteSession(int id)
         {

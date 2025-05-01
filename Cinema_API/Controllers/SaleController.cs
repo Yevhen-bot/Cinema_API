@@ -6,6 +6,7 @@ using DataAccess.Entity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cinema_API.Controllers
 {
@@ -25,33 +26,23 @@ namespace Cinema_API.Controllers
             _cartservice = cartservice;
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpGet]
         public IActionResult GetSales()
         {
-            return Ok(_context.Sales.ToList().Select(s => _mapper.Map<GetUpdateSaleModel>(s)));
+            return Ok(_context.Sales.Include(s => s.Tickets).ToList().Select(s => _mapper.Map<GetUpdateSaleModel>(s)));
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpGet("{id}")]
         public IActionResult GetSale(int id)
         {
-            var sale = _context.Sales.FirstOrDefault(s => s.Id == id);
+            var sale = _context.Sales.Include(s => s.Tickets).FirstOrDefault(s => s.Id == id);
             if (sale == null)
             {
                 return NotFound();
             }
             return Ok(_mapper.Map<GetUpdateSaleModel>(sale));
-        }
-
-        [HttpPost]
-        public IActionResult CreateSale([FromBody] CreateSaleModel sale)
-        {
-            if (sale == null)
-            {
-                return BadRequest();
-            }
-            _context.Sales.Add(_mapper.Map<Sale>(sale));
-            _context.SaveChanges();
-            return Created();
         }
 
         [HttpPost("order")]
@@ -70,23 +61,7 @@ namespace Cinema_API.Controllers
             return Created();
         }
 
-        [HttpPut]
-        public IActionResult UpdateSale([FromBody] GetUpdateSaleModel sale)
-        {
-            if (sale == null)
-            {
-                return BadRequest();
-            }
-            var existingSale = _context.Sales.Find(sale.Id);
-            if (existingSale == null)
-            {
-                return NotFound();
-            }
-            _mapper.Map(sale, existingSale);
-            _context.SaveChanges();
-            return NoContent();
-        }
-
+        [Authorize(Policy = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteSale(int id) 
         {

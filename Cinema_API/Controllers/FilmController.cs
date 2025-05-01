@@ -39,7 +39,7 @@ namespace Cinema_API.Controllers
             return Ok(_mapper.Map<GetFilmModel>(film));
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         public IActionResult CreateFilm([FromBody] CreateFilmModel film)
         {
@@ -52,7 +52,7 @@ namespace Cinema_API.Controllers
             return Created();
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpPut]
         public IActionResult UpdateFilm([FromBody] UpdateFilmModel film)
         {
@@ -78,7 +78,7 @@ namespace Cinema_API.Controllers
             return Ok();
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteFilm(int id)
         {

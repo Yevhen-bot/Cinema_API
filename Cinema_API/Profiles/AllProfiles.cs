@@ -28,9 +28,9 @@ namespace Cinema_API.Profiles
 
             CreateMap<User, GetUpdateUserModel>().ReverseMap();
             CreateMap<CreateUserModel, User>();
+            CreateMap<CreateAdminModel, User>();
 
             CreateMap<Sale, GetUpdateSaleModel>().ReverseMap();
-            CreateMap<CreateSaleModel, Sale>();
 
             CreateMap<CreateDiscountModel, Discount>();
             CreateMap<Discount, GetDiscountModel>();

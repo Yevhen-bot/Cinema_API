@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using DataAccess.Entity;
 
 namespace Cinema_API.DTOs
 {
-    public class CreateUserModel
+    public class CreateAdminModel
     {
         [MinLength(3)]
         public string Name { get; set; }

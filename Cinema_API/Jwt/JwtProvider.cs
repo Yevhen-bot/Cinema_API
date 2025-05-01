@@ -18,7 +18,7 @@ namespace Cinema_API.Jwt
 
         public string GenerateToken(User user)
         {
-            Claim[] claims = [new("userId", user.Id.ToString())];
+            Claim[] claims = [new("userId", user.Id.ToString()), new("Admin", user.IsAdmin.ToString())];
             
             var signingsCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SecretKey)), SecurityAlgorithms.HmacSha256);

@@ -45,6 +45,7 @@ namespace Cinema_API.Controllers
             return Ok(_mapper.Map<GetUpdateTicketModel>(ticket));
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         public IActionResult CreateTicket([FromBody] CreateTicketModel ticket)
         {
@@ -57,6 +58,7 @@ namespace Cinema_API.Controllers
             return Created();
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpPut]
         public IActionResult UpdateTicket([FromBody] GetUpdateTicketModel ticket)
         {
@@ -135,6 +137,7 @@ namespace Cinema_API.Controllers
             return NoContent();
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteTicket(int id)
         {
